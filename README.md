@@ -33,14 +33,15 @@ Tibo Watch 关注的是“额度相关事件”，而不是 Tibo 的所有普通
 - **AI 分类但本地兜底**：DeepSeek 负责判断语义，本地程序负责校验时间、去重、排期和安全边界。
 - **猫娘文案**：每个用户独立生成通知语气，保留二次元味道，也避免事实被模型乱写。
 - **轻量后台**：浏览器里管理通知用户、验证通道、发送预览、查看分析时间线。
-- **自托管友好**：Docker Compose 一键跑起，Caddy 自动申请 HTTPS 证书，数据落在本地 SQLite。
+- **自托管友好**：Docker Compose 跑起核心 watcher，接入独立反向代理网关后对外提供 HTTPS，数据落在本地 SQLite。
 
 ## 快速开始
 
-推荐部署在一台 ARM64 Ubuntu VPS 上，也可以运行在其他支持 Docker 的 Linux 主机上。服务由两个容器组成：
+推荐部署在一台 ARM64 Ubuntu VPS 上，也可以运行在其他支持 Docker 的 Linux 主机上。这个项目的 Compose 只管理核心服务：
 
 - `watcher`：监控、判断、通知和管理后台。
-- `caddy`：对外提供 HTTPS，并反向代理到后台。
+
+对外 HTTPS 建议由独立的 Caddy / Nginx / 1Panel 网关统一管理，不放在 Tibo Watch 的 Compose 里。
 
 ### 1. 准备配置
 
@@ -92,15 +93,16 @@ npm run admin:hash
 
 ### 3. 启动服务
 
-确认域名已经指向 VPS，并放行 TCP 80/443 与 UDP 443，然后启动：
+确认宿主机已有 `edge-public` 这类共享反向代理网络，然后启动：
 
 ```bash
+docker network create edge-public
 docker compose up -d
 docker compose ps
-docker compose logs -f watcher caddy
+docker compose logs -f watcher
 ```
 
-Caddy 会自动申请 HTTPS 证书。打开：
+在独立网关里把后台域名反向代理到 `tibo-watch-watcher:8787`，再打开：
 
 ```text
 https://你的域名
@@ -155,7 +157,7 @@ docker compose build --pull
 docker compose up -d
 ```
 
-数据保存在 `data/watcher.sqlite`。备份前建议先停止服务，复制完成后再启动。
+数据保存在 `data/watcher.sqlite`。备份前建议先停止 watcher，复制完成后再启动。反向代理网关独立升级，不跟随这个项目一起 `down`。
 
 ## 本地开发
 
