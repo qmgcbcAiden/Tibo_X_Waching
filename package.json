@@ -1,0 +1,37 @@
+{
+  "name": "tibo-x-watcher",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Anonymous X watcher for Tibo usage-reset announcements with DeepSeek classification and ServerChan delivery.",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/src/main.js",
+    "dev": "tsx src/main.ts",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "scrape:test": "tsx src/cli.ts scrape",
+    "notify:test": "tsx src/cli.ts notify",
+    "admin:hash": "tsx src/cli.ts admin-hash"
+  },
+  "dependencies": {
+    "dotenv": "16.6.1",
+    "he": "1.2.0",
+    "luxon": "3.7.2",
+    "playwright": "1.62.1",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@types/he": "1.2.3",
+    "@types/luxon": "3.7.1",
+    "@types/node": "24.10.1",
+    "linkedom": "0.18.12",
+    "tsx": "4.21.0",
+    "typescript": "7.0.2",
+    "vitest": "4.1.11"
+  }
+}

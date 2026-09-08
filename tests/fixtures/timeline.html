@@ -1,0 +1,30 @@
+<!doctype html>
+<html><body><main>
+  <article data-testid="tweet">
+    <a href="/thsottiaux">@thsottiaux</a>
+    <a href="/thsottiaux/status/100"><time datetime="2026-08-30T10:00:00.000Z">now</time></a>
+    <div data-testid="tweetText">Original reset announcement</div>
+  </article>
+  <article data-testid="tweet">
+    <a href="/thsottiaux">@thsottiaux</a>
+    <a href="/thsottiaux/status/101"><time datetime="2026-08-30T11:00:00.000Z">now</time></a>
+    <div data-testid="tweetText">My own text but it quotes someone</div>
+    <article data-testid="tweet">
+      <a href="/someone">@someone</a>
+      <a href="/someone/status/90"><time datetime="2026-08-29T11:00:00.000Z">old</time></a>
+      <div data-testid="tweetText">Quoted text</div>
+    </article>
+  </article>
+  <article data-testid="tweet">
+    <a href="/thsottiaux">@thsottiaux</a>
+    <a href="/thsottiaux/status/102"><time datetime="2026-08-30T12:00:00.000Z">now</time></a>
+    <div>Replying to @someone</div>
+    <div data-testid="tweetText">A reply</div>
+  </article>
+  <article data-testid="tweet">
+    <a href="/thsottiaux">@thsottiaux</a>
+    <a href="/thsottiaux/status/103"><time datetime="2026-08-30T13:00:00.000Z">now</time></a>
+    <div data-testid="socialContext">Tibo reposted</div>
+    <div data-testid="tweetText">A repost</div>
+  </article>
+</main></body></html>

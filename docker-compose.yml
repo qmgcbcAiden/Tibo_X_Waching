@@ -1,0 +1,50 @@
+services:
+  watcher:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: tibo-x-watcher:local
+    init: true
+    ipc: host
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+    expose:
+      - "8787"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    environment:
+      ADMIN_DOMAIN: ${ADMIN_DOMAIN}
+      ADMIN_INTERNAL_PORT: ${ADMIN_INTERNAL_PORT:-8787}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+volumes:
+  caddy_data:
+  caddy_config:
