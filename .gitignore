@@ -7,3 +7,11 @@ coverage/
 *.log
 .DS_Store
 部署材料.md
+
+# Local credentials and runtime database copies
+.env.*
+!.env.example
+*.pem
+*.key
+*.sqlite
+*.sqlite-*

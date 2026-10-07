@@ -6,3 +6,12 @@ data
 coverage
 test-results
 *.log
+
+# Local credentials and runtime database copies
+.env.*
+!.env.example
+*.pem
+*.key
+*.sqlite
+*.sqlite-*
+部署材料.md
